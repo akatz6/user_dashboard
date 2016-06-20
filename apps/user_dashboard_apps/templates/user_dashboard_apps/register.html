@@ -1,8 +1,36 @@
 <html>
 <head>
 	<title>register</title>
+	{% load staticfiles %}
+	<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
 </head>
 <body>
-
+	<div class="container">
+		<h3>Register</h3>
+		<form action="/add_to_db" method="Post">
+			{% csrf_token %}
+			<p>Email Address:</p>
+			<input type="text" name="email_address" class="register">
+			<p>First Name:</p>
+			<input type="text" name="first_name" class="register">
+			<p>Last Name:</p>
+			<input type="text" name="last_name" class="register">
+			<p>Password:</p>
+			<input type="password" name="password" class="register">
+			<p>Confirm Password:</p>
+			<input type="password" name="confirm_password"class="register"><br>
+			<input type="submit" value="Register" class="btn btn-success btn-md">
+		</form>
+		{% if messages %}
+			<ul class="messages">
+    		{% for message in messages %}
+    			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    		{% endfor %}
+			</ul>
+		{% endif %}
+		<a href="/login">already have an acount login</a>
+	</div>
 </body>
 </html>
