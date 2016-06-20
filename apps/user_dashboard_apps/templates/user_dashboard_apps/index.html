@@ -1,0 +1,42 @@
+<html>
+<head>
+	<title>Main Page</title>
+	{% load staticfiles %}
+	<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+</head>
+<body>
+	<div class="row">
+		<div class="col-md-12">
+			<ul class="nav nav-pills" id="start_menu">
+				<li role="presentation" id="test_app"><a href="#" id="test_app">Test App</a></li>
+				<li role="presentation"><a href="#">Home</a></li>
+				<li role="presentation" id="login"><a href="/login">Sign In</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="container">
+		<div class="jumbotron">
+			<h2>Hello, to the Test</h2>
+			<p>We are going to buiild a cool application using the MVC framework! This application was built with Village88 folks</p>
+			<p><a class="btn btn-primary btn-md" href="/register" role="button">Start</a>
+			</p>			
+		</div>
+		<div class="row">
+			<div class="col-md-4 col-sm-12">
+				<h3>Manage Users</h3>
+				<p>Using this application, you'll learn how to add, remove, and edit users for the application</p>
+			</div>
+			<div class="col-md-4 col-sm-12">
+				<h3>Leave messages</h3>
+				<p>User will be ablt o leave a message to another user using the application</p>
+			</div>
+			<div class="col-md-4 col-sm-12">
+				<h3>Edit User Information</h3>
+				<p>Admin will be ablt to edit another user's information(email adress, first name, last name,etc)</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
