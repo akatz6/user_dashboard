@@ -1,12 +1,11 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from . models import Register
-import re
-from django.contrib import messages
-import bcrypt
-EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9\.\+_-]+@[a-zA-Z0-9\._-]+\.[a-zA-Z]*$')
+
+
 
 # Create your views here.
 def index(request):
+	print Register.objects.all();
 	return render(request, 'user_dashboard_apps/index.html')
 
 def login(request):
@@ -22,35 +21,28 @@ def add_to_db(request):
 		password = request.POST['password']
 		confirm_password = request.POST['confirm_password']
 		email_address = request.POST['email_address']
-		valid = True
+		errors = Register.userManager.login(first_name, last_name, email_address,
+			password, confirm_password)
+		context ={
+		 'errors': errors[1]
+		}
+	return render(request, 'user_dashboard_apps/register.html', context)
 
-		if len(first_name) < 2:
-			messages.add_message(request, messages.ERROR, 'First Name needs to be at least one characters')
-			valid = False
-
-		if len(first_name) < 2:
-			messages.add_message(request, messages.ERROR, 'Last Name needs to be at least one characters')
-			valid = False
-
-		if len(password) < 2:
-			messages.add_message(request, messages.ERROR, 'Password needs to be at least one characters')
-			valid = False
-
-		if password != confirm_password:
-			messages.add_message(request, messages.ERROR, 'Passwords do not match')
-			valid = False
-
-		if not EMAIL_REGEX.match(email_address):
-			messages.add_message(request, messages.ERROR, 'Email is not in correct format')
-			valid = False
-
-		if valid:
-			pw_bytes = password.encode('utf-8')
-			hashed = bcrypt.hashpw(pw_bytes, bcrypt.gensalt())
-			Register.objects.create(first_name = first_name, last_name = last_name,
-			password = hashed, email= email_address, salt = bcrypt.gensalt())
-			messages.add_message(request, messages.SUCCESS, 'Registeration comeplete, please log in')
-
-	return render(request, 'user_dashboard_apps/register.html')
-
+def validate_password(request):
+	if request.method == 'POST':
+		email_address = request.POST['email_address']
+		password = request.POST['password']
+		errors = Register.userManager.validate(email_address,
+			password)
+		if errors[1] == 9:
+			print "wtf"
+			return render(request, 'user_dashboard_apps/admindashboard.html')
+		elif errors[1] == 0:
+			print "wtf1"
+			return render(request, 'user_dashboard_apps/dashboard.html')
+		context = {
+		'errors': errors[1]
+		}
+		print "wtf3"
+	return render(request, 'user_dashboard_apps/login.html', context)
 

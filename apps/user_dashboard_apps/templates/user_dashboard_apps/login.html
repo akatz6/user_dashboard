@@ -7,5 +7,24 @@
 	<script src="{% static 'js/bootstrap.min.js' %}"></script>
 </head>
 <body>
+	<div class="container">
+		<h3>Signin</h3>
+		<form action="/validate_password" method="Post">
+			{% csrf_token %}
+			<p>Email Address:</p>
+			<input type="text" name="email_address" class="register">
+			<p>Password:</p>
+			<input type="password" name="password" class="register">
+			<br>
+			<input type="submit" value="Sign in" class="btn btn-success btn-md">
+		</form>
+		{% if errors %}
+			<ul class="messages">
+    		{% for error, key in errors.items %}
+    			<li{% if error.tags %} class="{{ error.tags }}"{% endif %}>{{ key }}</li>
+    		{% endfor %}
+			</ul>
+		{% endif %}
+		<a href="/register">Don't have an account?   Register</a>
 </body>
 </html>

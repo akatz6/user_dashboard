@@ -23,10 +23,10 @@
 			<input type="password" name="confirm_password"class="register"><br>
 			<input type="submit" value="Register" class="btn btn-success btn-md">
 		</form>
-		{% if messages %}
+		{% if errors %}
 			<ul class="messages">
-    		{% for message in messages %}
-    			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    		{% for error, key in errors.items %}
+    			<li{% if error.tags %} class="{{ error.tags }}"{% endif %}>{{ key }}</li>
     		{% endfor %}
 			</ul>
 		{% endif %}
