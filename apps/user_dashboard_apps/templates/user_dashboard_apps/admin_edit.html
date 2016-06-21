@@ -1,8 +1,55 @@
+<!DOCTYPE HTML SYSTEM>
 <html>
 <head>
 	<title>edit</title>
+	{% load staticfiles %}
+	<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
 </head>
 <body>
-
+	<div class="row">
+		<div class="col-md-12">
+			<ul class="nav nav-pills" id="start_menu">
+				<li role="presentation"><a href="#" id="test_app">Test App</a></li>
+				<li role="presentation"><a href="/validate_password">Dashboard</a></li>
+				<li role="presentation"><a href="/home">Profile</a></li>
+				<li role="presentation" id="login"><a href="/logoff">Log Off</a></li>
+			</ul>
+		</div>		
+	</div>
+	<div class="container">
+		<h3>Edit User #{{user.id}}</h3>
+		<a class="btn btn-primary btn-md" href="/validate_password" role="button">Back to Dashboard</a>
+		<div class="edit_info">
+			<form action="/admin_edit/{{user.id}}" method="Post">
+				{% csrf_token %}
+				<p>Email Address</p>
+				<input type="text" name="email_address" value={{user.email}}>
+				<p>First Name</p>
+				<input type="text" name="first_name" value={{user.first_name}}>
+				<p>Last Name</p>
+				<input type="text" name="last_name" value={{user.last_name}}>
+				<br>
+				<select name="user_perm">
+					<option value="admin">Normal</option>
+					<option value="normal">Admin</option>
+				</select>
+				<br>
+				<input type="submit" value="Update Info" class="btn btn-success btn-md">
+			</form>
+		</div>
+		<div class="edit_password">
+			<form action="/password_edit/{{user.id}}" method="Post">
+				{% csrf_token %}
+				<p>Password</p>
+				<input type="password" name="password">
+				<p>Confirm Password</p>
+				<input type="password" name="confirm_password">
+				<br>
+				<input type="submit" value="Update Password" class="btn btn-success btn-md">
+			</form>
+		</div>
+	</div>
 </body>
 </html>

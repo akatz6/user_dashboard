@@ -10,4 +10,6 @@ urlpatterns = [
     url(r'^validate_password$', views.validate_password, name = 'validate_password'),
     url(r'^remove/(?P<id>\d+)$', views.remove, name = 'remove'),
     url(r'^edit/(?P<id>\d+)$', views.edit, name = 'edit'),
+    url(r'^admin_edit/(?P<id>\d+)$', views.admin_edit, name = 'admin_edit'),
+    # url(r'^password_edit/(?P<id>\d+)$', views.edit_pass, name = 'edit_pass'),
 ]

@@ -45,7 +45,10 @@ def validate_password(request):
 		'errors': errors[1]
 		}
 		return render(request, 'user_dashboard_apps/login.html', context)
-	return render(request, 'user_dashboard_apps/admindashboard.html')
+	context = {
+			"users": Register.objects.all()
+			}
+	return render(request, 'user_dashboard_apps/admindashboard.html', context)
 
 
 def remove(request, id):
@@ -57,7 +60,18 @@ def remove(request, id):
 
 def edit(request, id):
 	context ={
-	"users" : Register.userManager.get(id =id)
+	"user" : Register.userManager.get(id =id)
 	}
 	return render(request, 'user_dashboard_apps/admin_edit.html', context)
+
+def admin_edit(request, id):
+	first_name = request.POST['first_name']
+	last_name = request.POST['last_name']
+	email_address = request.POST['email_address']
+	user_perm = request.POST['user_perm']
+	Register.userManager.admin_edit(id, first_name, last_name, email_address, user_perm)
+	context ={
+	"users": Register.objects.all()
+	}
+	return render(request, 'user_dashboard_apps/admindashboard.html', context)
 	

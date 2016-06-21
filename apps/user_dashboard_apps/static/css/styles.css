@@ -23,9 +23,21 @@
 		}
 
 	/*registeration page*/
-	input.register{
+	input{
 		border: 1px solid black;
 		margin-bottom: 10px;
+	}
+
+	/*admin edit page*/
+	div.edit_info{
+		width: 20%;
+		border: 2px solid black;
+	}
+
+	div.edit_password{
+		width: 20%;
+		border: 2px solid black;
+		display: inline-block;
 	}
 
 

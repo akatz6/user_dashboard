@@ -69,6 +69,18 @@ class UserManager(models.Manager):
 		Register.objects.filter(id=id).delete()
 		return True
 
+	def admin_edit(self, id, first_name, last_name, email_address, user_perm):
+		reg = Register.objects.get(id=id)
+		reg.first_name = first_name
+		reg.last_name = last_name
+		reg.email = email_address
+		if user_perm == 'Admin':
+			reg.user_level = 9
+		else:
+			reg.user_level = 0
+		reg.save()
+		return True
+
 
 class Register(models.Model):
     first_name = models.CharField(max_length=45)
