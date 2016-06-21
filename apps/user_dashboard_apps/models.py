@@ -81,6 +81,12 @@ class UserManager(models.Manager):
 		reg.save()
 		return True
 
+	def password_edit(self, id, password, confirm_password):
+		reg = Register.objects.get(id=id)
+		reg.password
+		reg.save()
+
+
 
 class Register(models.Model):
     first_name = models.CharField(max_length=45)

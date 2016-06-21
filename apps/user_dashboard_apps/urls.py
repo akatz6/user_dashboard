@@ -11,5 +11,5 @@ urlpatterns = [
     url(r'^remove/(?P<id>\d+)$', views.remove, name = 'remove'),
     url(r'^edit/(?P<id>\d+)$', views.edit, name = 'edit'),
     url(r'^admin_edit/(?P<id>\d+)$', views.admin_edit, name = 'admin_edit'),
-    # url(r'^password_edit/(?P<id>\d+)$', views.edit_pass, name = 'edit_pass'),
+    url(r'^password_edit/(?P<id>\d+)$', views.password_edit, name = 'password_edit'),
 ]

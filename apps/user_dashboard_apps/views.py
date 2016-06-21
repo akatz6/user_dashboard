@@ -74,4 +74,14 @@ def admin_edit(request, id):
 	"users": Register.objects.all()
 	}
 	return render(request, 'user_dashboard_apps/admindashboard.html', context)
+
+def password_edit(request, id):
+	password = request.POST['password']
+	confirm_password = request.POST['confirm_password']
+	password_edit(id, password, confirm_password)
+	context ={
+	"users": Register.objects.all()
+	}
+	return render(request, 'user_dashboard_apps/admindashboard.html', context)
+
 	
