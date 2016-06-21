@@ -21,10 +21,13 @@ def add_to_db(request):
 		password = request.POST['password']
 		confirm_password = request.POST['confirm_password']
 		email_address = request.POST['email_address']
-		errors = Register.userManager.login(first_name, last_name, email_address,
+		
+		result = Register.userManager.login(first_name, last_name, email_address,
 			password, confirm_password)
+	
+
 		context ={
-		 'errors': errors[1]
+		 'errors': result[1]
 		}
 	return render(request, 'user_dashboard_apps/register.html', context)
 

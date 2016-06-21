@@ -8,29 +8,25 @@ EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9\.\+_-]+@[a-zA-Z0-9\._-]+\.[a-zA-Z]*$')
 
 class UserManager(models.Manager):
 	def login(self, first_name, last_name, email_address, password, confirm_password):
-		valid = True
-		errors = {}
-		if len(first_name) < 2:
-			errors['first_name'] = "First Name is too short"
-			valid = False
 
-		if len(last_name) < 2:
-			errors['last_name'] = "Last Name is too short"
-			valid = False
+		errors = []
+		errors.append(self.validate_length(first_name, 'first_name', 2, "First name is too short"))
+		errors.append(self.validate_length(last_name, 'last_name', 2, "Last name is too short"))
+		errors.append(self.password_match(password, confirm_password))
+		errors.append(self.validate_email(email_address))
 
-		if len(password) < 2:
-			errors['password'] = "Password is too short"
-			valid = False
-
-		if password != confirm_password:
-			errors['confirm_password'] = "Passwords must match"
-			valid = False
-
-		if not EMAIL_REGEX.match(email_address):
-			errors['email'] = "Please enter a valid email"
-			valid = False
-
-		if valid:
+		error = []
+		print errors
+		for elements in range(0, len(errors)):
+			try:
+				errors[elements][1]
+				error.append(errors[elements][1])
+			except:
+				pass
+		error2 = {}
+		for d in error:
+			error2.update(d)
+		if not bool(error2):
 			user_level = 0
 			records = Register.objects.all();
 			try: 
@@ -41,8 +37,33 @@ class UserManager(models.Manager):
 			hashed = bcrypt.hashpw(pw_bytes, bcrypt.gensalt())
 			Register.objects.create(first_name = first_name, last_name = last_name,
 			password = hashed, email= email_address, salt = bcrypt.gensalt(), user_level = user_level)
-			errors['success'] = "Registeration comeplete, please log in'"
-		return (True, errors)
+			success = {}
+			success['success'] = "Registeration comeplete, please log in"
+			return (True, success)
+		else:
+			return (False, error2)
+
+	def validate_length(self, test, name, alength, error_string):
+		errors = {}
+		if len(test) < alength:
+			print test
+			errors[name] = error_string
+			return(False, errors)
+
+	def password_match(self, password, confirm_password):
+		errors = {}
+		if password != confirm_password:
+			errors['confirm_password'] = "Passwords must match"
+			return(False, errors)
+		elif len(password) < 2 or len(confirm_password) < 2:			
+			errors['confirm_password'] = "Password is too short"
+			return(False, errors)
+
+	def validate_email(self, email_address):
+		errors = {}
+		if not EMAIL_REGEX.match(email_address):
+			errors['email'] = "Please enter a valid email"
+			return(False, errors)
 
 	def validate(self, email_address, password):
 		errors = {}
