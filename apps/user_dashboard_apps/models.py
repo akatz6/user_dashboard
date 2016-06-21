@@ -65,6 +65,10 @@ class UserManager(models.Manager):
 		else:
 			return (False, errors)
 
+	def remove_element(self, id):
+		Register.objects.filter(id=id).delete()
+		return True
+
 
 class Register(models.Model):
     first_name = models.CharField(max_length=45)

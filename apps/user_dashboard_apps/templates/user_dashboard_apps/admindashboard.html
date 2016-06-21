@@ -1,8 +1,51 @@
 <html>
 <head>
 	<title>Admin Dashboard</title>
+	{% load staticfiles %}
+	<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
 </head>
 <body>
+	<div class="row">
+		<div class="col-md-12">
+			<ul class="nav nav-pills" id="start_menu">
+				<li role="presentation" id="test_app"><a href="#" id="test_app">Test App</a></li>
+				<li role="presentation"><a href="/home">Dashboard</a></li>
+				<li role="presentation"><a href="/home">Profile</a></li>
+				<li role="presentation" id="login"><a href="/logoff">Log Off</a></li>
+			</ul>
+		</div>		
+	</div>
+	<div class="container">
+		<div class="header">
+			<h2>Manage Users</h2>
+			<a class="btn btn-primary btn-md" href="/register" role="button">Add New</a>
+		</div>
+		<table class="table table-striped">
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>email</th>
+				<th>created_at</th>
+				<th>user_level</th>
+				<th>actions</th>
+			</tr>
+			{% for user in users %}
+			<tr>
+				<td>{{user.id}}</td>
+				<td>{{user.first_name}}  {{user.last_name}}</td>
+				<td>{{user.email}}</td>
+				<td>{{user.created_at}}</td>
+				<td>{{user.user_level}}</td>
+				<td></td>
+					<td><a href='/edit/{{user.id}}'>Edit</a></td>
+					<td><a href='/remove/{{user.id}}'>Delete</a></td>
+				</td>
+			</tr>
+			{% endfor%}
+		</table>
+	</div>
 
 </body>
 </html>

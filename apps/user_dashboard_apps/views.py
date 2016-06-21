@@ -35,14 +35,29 @@ def validate_password(request):
 		errors = Register.userManager.validate(email_address,
 			password)
 		if errors[1] == 9:
-			print "wtf"
-			return render(request, 'user_dashboard_apps/admindashboard.html')
+			context = {
+			"users": Register.objects.all()
+			}
+			return render(request, 'user_dashboard_apps/admindashboard.html', context)
 		elif errors[1] == 0:
-			print "wtf1"
 			return render(request, 'user_dashboard_apps/dashboard.html')
 		context = {
 		'errors': errors[1]
 		}
-		print "wtf3"
-	return render(request, 'user_dashboard_apps/login.html', context)
+		return render(request, 'user_dashboard_apps/login.html', context)
+	return render(request, 'user_dashboard_apps/admindashboard.html')
 
+
+def remove(request, id):
+	Register.userManager.remove_element(id)
+	context = {
+			"users": Register.objects.all()
+			}
+	return render(request, 'user_dashboard_apps/admindashboard.html', context)
+
+def edit(request, id):
+	context ={
+	"users" : Register.userManager.get(id =id)
+	}
+	return render(request, 'user_dashboard_apps/admin_edit.html', context)
+	
