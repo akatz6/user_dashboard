@@ -16,5 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 
 urlpatterns = [
+ 	url(r'^wall/', include('apps.message_wall.urls')),
     url(r'^', include('apps.user_dashboard_apps.urls')),
+   
 ]

@@ -5,7 +5,6 @@ from . models import Register
 
 # Create your views here.
 def index(request):
-	print Register.objects.all();
 	return render(request, 'user_dashboard_apps/index.html')
 
 def login(request):
@@ -43,7 +42,10 @@ def validate_password(request):
 			}
 			return render(request, 'user_dashboard_apps/admindashboard.html', context)
 		elif errors[1] == 0:
-			return render(request, 'user_dashboard_apps/dashboard.html')
+			context = {
+			"users": Register.objects.all()
+			}
+			return render(request, 'user_dashboard_apps/dashboard.html', context)
 		context = {
 		'errors': errors[1]
 		}

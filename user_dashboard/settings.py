@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'apps.user_dashboard_apps',
+    'apps.message_wall',
     'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',

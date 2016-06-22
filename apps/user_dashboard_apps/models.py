@@ -46,7 +46,6 @@ class UserManager(models.Manager):
 	def validate_length(self, test, name, alength, error_string):
 		errors = {}
 		if len(test) < alength:
-			print test
 			errors[name] = error_string
 			return(False, errors)
 
